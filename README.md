@@ -12,7 +12,7 @@ Approaches to use neural networks efficiently on mobile devices can be separated
 * Multitask learning
 * Neural architecture search
 
-I came up with quite similar division into categories as in [EfficientDNNs][https://github.com/MingSun-Tse/EfficientDNNs]. This division does not mean that these methods are incompatible. The best results were obtained by applying a combination of several methods.
+I came up with quite similar division into categories as in [EfficientDNNs](https://github.com/MingSun-Tse/EfficientDNNs). This division does not mean that these methods are incompatible. The best results were obtained by applying a combination of several methods.
 
 ## Architecture
 
