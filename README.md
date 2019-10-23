@@ -1,4 +1,4 @@
-Approaches to use neural networks efficiently on mobile devices can be separated into the following categories:
+Approaches to use neural networks on mobile devices efficiently can be separated into the following categories:
 
 * Architecture of DNN
   * Decrease complexity: MobileNets, BlazeFace;
@@ -13,6 +13,28 @@ Approaches to use neural networks efficiently on mobile devices can be separated
 * Neural architecture search
 
 I came up with quite similar division into categories as in [EfficientDNNs](https://github.com/MingSun-Tse/EfficientDNNs). This division does not mean that these methods are incompatible. The best results were obtained by applying a combination of several methods.
+
+## Frameworks
+
+* [TensorflowLite](https://www.tensorflow.org/lite) Forced by Google a lot. Now offers [execution on mobile GPU](https://medium.com/tensorflow/e15797e6dee7) with OpenGL ES Compute Shaders on Android and Metal Compute Shaders on iOS.
+* [CoreML by Apple](https://developer.apple.com/documentation/coreml) Has some disadvantages like no model protection, limits the GPU performance (for battery saving). (iOS ONLY)
+* [OpenCV DNN](https://docs.opencv.org/master/d0/d6c/tutorial_dnn_android.html) Does not utilize mobile GPU but gets some boost from NEON instructions (Single Instruction Multiple Data for ARM). It works quite good for simple cases.
+* [Tensorflow Mobile](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android) (Deprecated) Not specially designed for mobile devices, but in a case, with [MegaDepth](https://github.com/zhengqili/MegaDepth) on Android, it showed much better results than TFLite (at the beginning of 2019).
+* [MACE by Xiaomi](https://github.com/XiaoMi/mace) Provides [a great tool for benchmarking](https://mace.readthedocs.io/en/latest/user_guide/benchmark.html) reports time consumption of each layer and helps to find a bottleneck. (Android ONLY)
+* [SNPE by Qualcomm](https://developer.qualcomm.com/docs/snpe/overview.html) Developed, especially for Snapdragon processors. Among CPU and GPU supports [DSP (special coprocessor)](https://developer.qualcomm.com/software/hexagon-dsp-sdk/dsp-processor) execution. (Android/Snapdragon ONLY)
+
+Frameworks I have not tried yet:
+
+* [ncnn by Tencent](https://github.com/Tencent/ncnn) Uses Vulkan API to get GPU acceleration.
+* [Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite) Inference engine and optimization tools. Supports different hardware: ARM CPU, Mali GPU, Adreno GPU, Huawei NPU, and FPGA.
+* [HiAI by Huawei](https://developer.huawei.com/consumer/en/hiai) Developed for Kirin processors supports NPU execution. Also, it provides several solutions (eg. face detection, text recognition) out of the box. (Android+Kirin ONLY)
+
+* [PyTorch Mobile](https://pytorch.org/mobile/home/) Was introduced recently. No insides yet.
+* [Smelter by Prisma](https://github.com/prisma-ai/Smelter) Young framework, but used for production in [huge and popular applications]([https://prisma-ai.com](https://prisma-ai.com/)). It utilizes metal shaders for GPU acceleration. (iOS ONLY)
+
+Not a frameworks, but worth paying attention to:
+
+- [Android NNAPI](https://developer.android.com/ndk/guides/neuralnetworks/) Common interface for frameworks to access hardware acceleration. Android 8.1 (27+). Used in TFLite.
 
 ## Architecture
 
