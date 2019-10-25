@@ -44,13 +44,55 @@ BlazeFace https://arxiv.org/abs/1907.05047
 Prizma Portrait Segmentation https://blog.prismalabs.ai/39c84f1b9e66
 EfficientNet https://arxiv.org/abs/1905.11946
 
+* **A. G. Howard, M. Zhu, B. Chen, D. Kalenichenko, W. Wang, T. Weyand, M. Andreetto, and H. Adam, “Mobilenets: Efficient convolutional neural networks for mobile vision applications,” arXiv preprint arXiv:1704.04861, 2017.**
+
+  The main idea – **depthwise separable convolution**. Convolution trick got good support from frameworks. Authors suggest to apply convolution to space and channels separately – it drastically decreases size and computation cost of the model while keeping good accuracy. There is improvement mobilenet v2 with residual connections, and also some experiments “in search for mobilenet v3
+
+* **F. Chollet, “Xception: Deep learning with depthwise separable convolutions,” arXiv preprint, pp. 1610–02 357, 2017.**
+
+  The researcher applies ideas from mobilenet to Inception architecture. He used 60 k80 GPU for a month and archives improvement in 0.08% and 0.04% for top1 and top5 accuracy respectively. While marginally decrease speed. Also, he used a huge google private dataset, so we probably can’t even reproduce these results.
+
 ## Compressing
 
 There is a lot of redundancy in neural networks. Both in the way, models are stored as well as in unused connections. For instance, authors of the "DEEP COMPRESSION" paper achieve a compression rate of 49x ( from 552MB to 11.3MB) with VGG-16 without any accuracy loss on the ImageNet classification task.
 
+* **S. Han, J. Pool, J. Tran, and W. Dally, “Learning both weights and connections for efficient neural network,” in Advances in neural information processing systems, 2015, pp. 1135–1143.** <a href="learning_both_weights_and_connections"></a>
+
+  Idea is to remove redundancy in networks by **pruning unnecessary weights** (as animal brain does during maturation), then fine-tune network to work with sparse matrices. It can be applied several times for further compression. Authors archives 9x compression and speedup from 3x to 5x. I think speed up very depends on software (PyTorch, TensorFlow sparse tensor) realization. And after some googling, it turns to have more effect when execution is done on CPU rather than GPU (for GPU is cheaper to multiply dense matrix, than check conditions). Interesting how it will show up on mobile devices.
+
+* **S. Han, H. Mao, and W. J. Dally, “Deep compression: Compressing deep neural networks with pruning, trained quantization and Huffman coding” arXiv preprint arXiv:1510.00149, 2015.**
+
+  In continuation of <a href="#learning_both_weights_and_connections">the previous work</a> authors made huge work in testing combination of compressing techniques on different architectures/datasets/hardware. They achieve 49x compression for VGG network without accuracy loss. Along with storage benefits 200Mb vs 12Mb. It also gives a significant boost in performance and decreases energy consumption.
+
+* **Y. Gong, L. Liu, M. Yang, and L. Bourdev, “Compressing deep convolutional network using vector quantization,” arXiv preprint arXiv:1412.6115, 2014.** 
+
+  Decrease storage space of a model. Because of the number of parameters, 90% of disc space is taken by dense layers. It turns out that simple **k mean vector quantization** achieves good results (8-16 compression ratio with <0.5% accuracy loss). Using structured quantization, split matrix by rows/columns and apply k mean to each separately, shows better results, but requires experiments which structure is the best in particular case. An interesting fact that binarization (keep just sign of weight) also shows pretty good results.
+
+* **E. L. Denton, W. Zaremba, J. Bruna, Y. LeCun, and R. Fergus, “Exploiting linear structure within convolutional networks for efficient evaluation,” in Advances in Neural Information Processing Systems, 2014, pp. 1269–1277.**
+
+  The idea is to decrease the number of computation/multiplication by **approximating weight matrices with a more compact form**. Authors of the work noticed that the most computationally intensive layers in convolutional networks are first two convolution layers. I think it’s difficult to apply this technique (and authors also mentioned that) because it depends on an actual implementation.
+
+  > "We consider several elementary tensor decompositions based on singular value decompositions, as well as filter clustering methods to take advantage of similarities between learned features."
+
+* **W. Chen, J. Wilson, S. Tyree, K. Weinberger, and Y. Chen, “Compressing neural networks with the hashing trick,” in International Conference on Machine Learning, 2015, pp. 2285–2294.**
+
+  It looks like a weird solution. Authors want to decrease space usage (storage and ram) by **using the same set of parameters randomly (by hash function)** located in a dense layer. They even achieve better accuracy compared with network with the same amount of actual parameters. But the problem is that they didn’t consider execution time. To achieve the same accuracy they increase the amount of computations! For instance, 3 layers network HashNet achieves 1.45% error rate while "classic" one achieves 1.69% with 8 times fewer computations.
+
+  > “Each model is compared against a standard neural network with an equivalent number of stored parameters, Neural Network (Equivalent-Size) (NN). For example, for a network with a single hidden layer of 1000 units and a storage compression factor of 1/10, we adopt a size-equivalent baseline with a single hidden layer of 100 units.”
+
 ## Knowledge distillation
 
-Neural networks learn better from other networks than from ground truth data. There could be several reasons for that: 1) Soft class labels instead of hard ones provides more information for the students. For instance, a car looks more like a bus rather than a cat. Also, during the training penalty for misclassifying cars and buses will be less. 2) A teacher model can overcome errors in training data. 3) TODO
+Neural networks learn better from other networks than from ground truth data. There could be several reasons for that: 1) Soft class labels instead of hard ones provides more information for the students. For instance, classes of cats and dogs are closer in terms of similarity than cats and cars. Also, during the training penalty for misclassifying cats and dogs will be less. 2) A teacher model can overcome errors in training data. 3) We can use additional data from unlabled part of dataset.
+
+
+
+* **G.Hinton, O.Vinyals, and J.Dean,“Distilling the knowledge in a neural network,” arXiv preprint arXiv:1503.02531, 2015**
+
+  The idea is to **combine ground truth labels from a training dataset and soft output of the teacher mode**l. The second idea is to use “specialist” models which learned a subset of classes and then distillate their knowledge to a single model.
+
+* **J. Ba and R. Caruana, “Do deep nets really need to be deep?” in Advances in Neural Information Processing Systems 27, Z. Ghahramani, M. Welling, C. Cortes, N. D. Lawrence, and K. Q. Weinberger, Eds. Curran Associates, Inc., 2014, pp. 2654–2662. **
+
+  Authors showed that a shallow net can learn complex functions from deeper models. // TODO
 
 ## Quantization
 
@@ -68,6 +110,10 @@ If a task requires to get a different kind of information from the same input da
 
 Finding hyperparameters for an architecture of a neural network can be formulated as an optimization task. For instance, number of layers, number of filters and kernel size of CNN. It can be done either for designing and training network from scratch or for finetuning existing network.
 https://arxiv.org/abs/1611.01578
+
+
+
+// TODO https://ssnl.github.io/dataset_distillation/ – distilate dataset (MNIST from 60k to 10 images), so that nas can be performed a lot faster! (source https://t.me/gonzo_ML/143)
 
 ## Related Repos
 
