@@ -22,15 +22,15 @@ I came up with quite similar division into categories as in [EfficientDNNs](http
 * [Tensorflow Mobile](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android) (Deprecated) Not specially designed for mobile devices, but in a case, with [MegaDepth](https://github.com/zhengqili/MegaDepth) on Android, it showed much better results than TFLite (at the beginning of 2019).
 * [MACE by Xiaomi](https://github.com/XiaoMi/mace) Provides [a great tool for benchmarking](https://mace.readthedocs.io/en/latest/user_guide/benchmark.html) reports time consumption of each layer and helps to find a bottleneck. (Android ONLY)
 * [SNPE by Qualcomm](https://developer.qualcomm.com/docs/snpe/overview.html) Developed, especially for Snapdragon processors. Among CPU and GPU supports [DSP (special coprocessor)](https://developer.qualcomm.com/software/hexagon-dsp-sdk/dsp-processor) execution. (Android/Snapdragon ONLY)
+* [ncnn by Tencent](https://github.com/Tencent/ncnn) Uses Vulkan API to get GPU acceleration. Pure C++ code with optional Vulcan shaders. It doesn't have dependencies, builds easily with cmake. 
 
 Frameworks I have not tried yet:
 
-* [ncnn by Tencent](https://github.com/Tencent/ncnn) Uses Vulkan API to get GPU acceleration.
 * [Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite) Inference engine and optimization tools. Supports different hardware: ARM CPU, Mali GPU, Adreno GPU, Huawei NPU, and FPGA.
-* [HiAI by Huawei](https://developer.huawei.com/consumer/en/hiai) Developed for Kirin processors supports NPU execution. Also, it provides several solutions (eg. face detection, text recognition) out of the box. (Android+Kirin ONLY)
-
+* [HiAI by Huawei](https://developer.huawei.com/consumer/en/hiai) Developed for Kirin processors supports NPU execution. Also, it provides several solutions (eg. face detection, text recognition) out of the box. (Android + Huawei Kirin ONLY)
 * [PyTorch Mobile](https://pytorch.org/mobile/home/) Was introduced recently. No insides yet.
 * [Smelter by Prisma](https://github.com/prisma-ai/Smelter) Young framework, but used for production in [huge and popular applications]([https://prisma-ai.com](https://prisma-ai.com/)). It utilizes metal shaders for GPU acceleration. (iOS ONLY)
+* [Samsung Neural SDK](https://developer.samsung.com/neural) First version just released on Jul 30. Doesn't support anything yet (probably only Caffe models). Available only on request + you have to have "representative who can verify your partnership". (Android + Samsung ONLY)
 
 Not a frameworks, but worth paying attention to:
 
