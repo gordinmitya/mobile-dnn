@@ -26,6 +26,7 @@ I came up with quite similar division into categories as in [EfficientDNNs](http
 
 Frameworks I have not tried yet:
 
+* [MNN by Alibaba](https://github.com/alibaba/MNN) Quite promising [benchmark results](https://github.com/alibaba/MNN/blob/master/benchmark/result/2019-6-17.md). [Documentation](https://www.yuque.com/mnn/en/about).
 * [Paddle-Lite](https://github.com/PaddlePaddle/Paddle-Lite) Inference engine and optimization tools. Supports different hardware: ARM CPU, Mali GPU, Adreno GPU, Huawei NPU, and FPGA.
 * [HiAI by Huawei](https://developer.huawei.com/consumer/en/hiai) Developed for Kirin processors supports NPU execution. Also, it provides several solutions (eg. face detection, text recognition) out of the box. (Android + Huawei Kirin ONLY)
 * [PyTorch Mobile](https://pytorch.org/mobile/home/) Was introduced recently. No insides yet.
