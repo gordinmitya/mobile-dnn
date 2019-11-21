@@ -32,6 +32,8 @@ Frameworks I have not tried yet:
 * [PyTorch Mobile](https://pytorch.org/mobile/home/) Was introduced recently. No insides yet.
 * [Smelter by Prisma](https://github.com/prisma-ai/Smelter) Young framework, but used for production in [huge and popular applications]([https://prisma-ai.com](https://prisma-ai.com/)). It utilizes metal shaders for GPU acceleration. (iOS ONLY)
 * [Samsung Neural SDK](https://developer.samsung.com/neural) First version just released on Jul 30. Doesn't support anything yet (probably only Caffe models). Available only on request + you have to have "representative who can verify your partnership". (Android + Samsung ONLY)
+* [Tengine by OPEN AI LAB](https://github.com/OAID/Tengine/) 
+* [NNPACK](https://github.com/Maratyszcza/NNPACK) and [QNNPACK](https://github.com/pytorch/QNNPACK)
 
 Not a frameworks, but worth paying attention to:
 
